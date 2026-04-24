@@ -1,0 +1,407 @@
+{
+  "form_id": "td63a",
+  "note": "Edit candidate_mapping: map each candidate key to the PDF field name shown in 'fields' above",
+  "fields": {
+    "日間聯絡電話 Day Time Contact Tel": {
+      "type": "Unknown",
+      "current_value": ""
+    },
+    "日間聯絡電話 Day Time Contact Tel. No": {
+      "type": "text",
+      "current_value": ""
+    },
+    "英文姓名 Name In English": {
+      "type": "text",
+      "current_value": ""
+    },
+    "中文姓名 Name in Chinese": {
+      "type": "text",
+      "current_value": ""
+    },
+    "中文商用號碼 Chinese Commercial Code_4": {
+      "type": "text",
+      "current_value": ""
+    },
+    "中文商用號碼 Chinese Commercial Code_5": {
+      "type": "text",
+      "current_value": ""
+    },
+    "中文商用號碼 Chinese Commercial Code_6": {
+      "type": "text",
+      "current_value": ""
+    },
+    "身分證明文件號碼 Identity Document No": {
+      "type": "text",
+      "current_value": ""
+    },
+    "99": {
+      "type": "text",
+      "current_value": ""
+    },
+    "大廈╱屋苑名稱 Name of Building / Estate_RA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "門牌號數及街道( 或鄉村) 名稱 Number and Name of Street (or Village)_RA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "toggle_5": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_6": {
+      "type": "button",
+      "current_value": ""
+    },
+    "大廈╱屋苑名稱 Name of Building / Estate_CA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "門牌號數及街道( 或鄉村) 名稱 Number and Name of Street (or Village)_CA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "toggle_7": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "中文商用號碼 Chinese Commercial Code_1": {
+      "type": "text",
+      "current_value": ""
+    },
+    "中文商用號碼 Chinese Commercial Code_2": {
+      "type": "text",
+      "current_value": ""
+    },
+    "出生日期 DATE OF BIRTH": {
+      "type": "text",
+      "current_value": ""
+    },
+    "中文商用號碼 Chinese Commercial Code_3": {
+      "type": "text",
+      "current_value": ""
+    },
+    "室 Flat/Room_RA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "樓 Floor_RA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "座 Block/ Tower_RA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "地區 District_RA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "toggle_4": {
+      "type": "button",
+      "current_value": ""
+    },
+    "室 Flat/Room_CA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "樓 Floor_CA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "座 Block_CA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "地區 District_CA": {
+      "type": "text",
+      "current_value": ""
+    },
+    "toggle_8": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_9": {
+      "type": "button",
+      "current_value": ""
+    },
+    "fill_12": {
+      "type": "text",
+      "current_value": ""
+    },
+    "簽發國家或地方代號 Code of Issuing Country or Place": {
+      "type": "text",
+      "current_value": ""
+    },
+    "DOI_dd": {
+      "type": "text",
+      "current_value": ""
+    },
+    "DOI_mm": {
+      "type": "text",
+      "current_value": ""
+    },
+    "DOI_yyyy": {
+      "type": "text",
+      "current_value": ""
+    },
+    "1 私家車 Private Car": {
+      "type": "button",
+      "current_value": ""
+    },
+    "A": {
+      "type": "button",
+      "current_value": ""
+    },
+    "Check Box6": {
+      "type": "button",
+      "current_value": ""
+    },
+    "A_2": {
+      "type": "button",
+      "current_value": ""
+    },
+    "3": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_15": {
+      "type": "button",
+      "current_value": ""
+    },
+    "A_3": {
+      "type": "button",
+      "current_value": ""
+    },
+    "A_4": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_18": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_19": {
+      "type": "button",
+      "current_value": ""
+    },
+    "Check Box1": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box4": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box19": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box21": {
+      "type": "button",
+      "current_value": ""
+    },
+    "Check Box2": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box3": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box0": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box20": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "DOI_yyyy0": {
+      "type": "text",
+      "current_value": ""
+    },
+    "DOI_mm0": {
+      "type": "text",
+      "current_value": ""
+    },
+    "DOI_dd0": {
+      "type": "text",
+      "current_value": ""
+    },
+    "comb_0": {
+      "type": "text",
+      "current_value": ""
+    },
+    "toggle_1": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_2": {
+      "type": "button",
+      "current_value": ""
+    },
+    "No": {
+      "type": "button",
+      "current_value": ""
+    },
+    "Yes I have an approval letter issued by the Commissioner for Transport upon passing the driving ability assessment": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_5_2": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_6_2": {
+      "type": "button",
+      "current_value": ""
+    },
+    "undefined_8": {
+      "type": "text",
+      "current_value": ""
+    },
+    "No_2": {
+      "type": "button",
+      "current_value": ""
+    },
+    "Yes I am suffering from": {
+      "type": "button",
+      "current_value": ""
+    },
+    "which is a disease or physical disability specified in the First Schedule to the Road": {
+      "type": "text",
+      "current_value": ""
+    },
+    "toggle_9_2": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_10": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_13": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_14": {
+      "type": "button",
+      "current_value": ""
+    },
+    "Check Box9": {
+      "type": "button",
+      "current_value": ""
+    },
+    "Check Box10": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_17": {
+      "type": "button",
+      "current_value": ""
+    },
+    "toggle_18_2": {
+      "type": "button",
+      "current_value": ""
+    },
+    "Whether the Commissioner has at any time because of the disease or physical disability as specified in 1ii above or any other disease or physical disability refused": {
+      "type": "text",
+      "current_value": ""
+    },
+    "No_5": {
+      "type": "button",
+      "current_value": ""
+    },
+    "Yes please specify the disease or physical disability": {
+      "type": "button",
+      "current_value": ""
+    },
+    "fill_5": {
+      "type": "text",
+      "current_value": ""
+    },
+    "fill_6": {
+      "type": "text",
+      "current_value": ""
+    },
+    "Name of Agent": {
+      "type": "text",
+      "current_value": ""
+    },
+    "name of agent holder of identity document number": {
+      "type": "text",
+      "current_value": ""
+    },
+    "Check Box5": {
+      "type": "button",
+      "current_value": ""
+    },
+    "Check Box11": {
+      "type": "button",
+      "current_value": ""
+    },
+    "name of agent holder of identity document number0": {
+      "type": "text",
+      "current_value": ""
+    },
+    "日期 Date_1": {
+      "type": "text",
+      "current_value": ""
+    },
+    "Check Box7": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box12": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box13": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box14": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box15": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box16": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box17": {
+      "type": "button",
+      "current_value": "/Off"
+    },
+    "Check Box18": {
+      "type": "button",
+      "current_value": "/Off"
+    }
+  },
+  "candidate_mapping": {
+    "name_en": "英文姓名 Name In English",
+    "name_zh": "中文姓名 Name in Chinese",
+    "hkid": "身分證明文件號碼 Identity Document No",
+    "date_of_birth": "出生日期 DATE OF BIRTH",
+    "phone": "日間聯絡電話 Day Time Contact Tel. No",
+    "email": "NOT_IN_FORM",
+    "address": "FILL_AFTER_SCAN",
+    "driving_licence": "FILL_AFTER_SCAN",
+    "licence_classes": "FILL_AFTER_SCAN",
+    "licence_expiry": "FILL_AFTER_SCAN"
+  },
+  "mapping_notes": {
+    "email": "TD63A 政府表格冇 email 欄，標 NOT_IN_FORM 跳過。",
+    "address": "地址分 RA（住址）同 CA（通訊地址），每個再拆 5 格：室 Flat/Room、樓 Floor、座 Block、大廈 Building、街道 Street、地區 District。Supabase candidates.address 係單一 text 字串，要另外寫 parser 拆開，或者分開存 address_flat / address_floor / address_block / address_building / address_street / address_district。",
+    "driving_licence": "TD63A 係申請新牌表格，可能冇現有牌號欄。候選 field：fill_12（text，位置喺 '簽發國家或地方代號' 前）。如果係 Priscilla 用嚟填申請新牌就唔使 map。",
+    "licence_classes": "牌照類別係多個 checkbox（例 '1 私家車 Private Car'、'A'、'Check Box1-20'、'toggle_*'）。要由 array → 多個 button 勾選，form_agent.py 要加 multi-button handling 邏輯，唔係單一 field name map 得掂。",
+    "licence_expiry": "TD63A 冇現有牌到期日欄（DOI_dd/mm/yyyy 係 Date of Issue，申請簽發日）。",
+    "address_fields_ra": ["大廈╱屋苑名稱 Name of Building / Estate_RA", "門牌號數及街道( 或鄉村) 名稱 Number and Name of Street (or Village)_RA", "室 Flat/Room_RA", "樓 Floor_RA", "座 Block/ Tower_RA", "地區 District_RA"],
+    "address_fields_ca": ["大廈╱屋苑名稱 Name of Building / Estate_CA", "門牌號數及街道( 或鄉村) 名稱 Number and Name of Street (or Village)_CA", "室 Flat/Room_CA", "樓 Floor_CA", "座 Block_CA", "地區 District_CA"]
+  }
+}
