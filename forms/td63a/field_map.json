@@ -5,7 +5,7 @@
     "name_zh": "中文姓名 Name in Chinese",
     "hkid": "身分證明文件號碼 Identity Document No",
     "date_of_birth": {
-      "formatter": "strip_dashes",
+      "formatter": "date_to_comb",
       "target": "出生日期 DATE OF BIRTH"
     },
     "phone": "日間聯絡電話 Day Time Contact Tel. No",

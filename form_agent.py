@@ -80,6 +80,22 @@ def _fmt_split_by_space(val, targets: list) -> dict:
     return {t: p for t, p in zip(targets, parts) if p}
 
 
+@_formatter("date_to_comb")
+def _fmt_date_to_comb(val, target: str) -> dict:
+    """ISO '1999-09-10' → '10091999' for DDMMYYYY 8-cell comb (default HK gov layout).
+    Accepts ISO (yyyy-mm-dd), DMY (dd-mm-yyyy), or any '-' / '/' / '.' / space separator.
+    Day & month zero-padded; year kept as-is (typically 4-digit).
+    """
+    parts = re.split(r"[-/\s.]+", str(val).strip())
+    if len(parts) < 3 or not target:
+        return {}
+    if len(parts[0]) == 4:                       # ISO yyyy-mm-dd
+        yyyy, mm, dd = parts[0], parts[1], parts[2]
+    else:                                        # already DMY
+        dd, mm, yyyy = parts[0], parts[1], parts[2]
+    return {target: f"{dd.zfill(2)}{mm.zfill(2)}{yyyy}"}
+
+
 @_formatter("split_date_to_3")
 def _fmt_split_date_to_3(val, targets: dict) -> dict:
     """ISO '1999-09-10' or DMY '10/09/1999' → 3 separate PDF fields.
