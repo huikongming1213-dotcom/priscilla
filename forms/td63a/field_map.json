@@ -5,12 +5,8 @@
     "name_zh": "中文姓名 Name in Chinese",
     "hkid": "身分證明文件號碼 Identity Document No",
     "date_of_birth": {
-      "formatter": "split_date_to_3",
-      "targets": {
-        "dd": "99",
-        "mm": "日 M",
-        "yyyy": "年 Y"
-      }
+      "formatter": "strip_dashes",
+      "target": "出生日期 DATE OF BIRTH"
     },
     "phone": "日間聯絡電話 Day Time Contact Tel. No",
     "email": "NOT_IN_FORM",
@@ -40,13 +36,13 @@
     "title": {
       "formatter": "tickbox_group",
       "targets": {
-        "Mr": "1",
-        "Mrs": "2",
-        "Miss": "3",
-        "Ms": "4"
-      },
-      "default_others_false": true
+        "Mr": "Check Box0",
+        "Mrs": "Check Box1",
+        "Miss": "Check Box2",
+        "Ms": "Check Box3"
     },
+  "default_others_false": true
+},
     "driving_licence": "NOT_IN_FORM",
     "licence_classes": "NOT_IN_FORM",
     "licence_expiry": "NOT_IN_FORM"
