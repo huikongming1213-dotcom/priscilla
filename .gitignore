@@ -1,0 +1,48 @@
+# ─────────── Python ───────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ─────────── Virtual environments ───────────
+.venv/
+venv/
+env/
+ENV/
+
+# ─────────── Secrets (NEVER commit real keys) ───────────
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+# .env.example IS committed, but MUST contain placeholders only — no real keys.
+
+# ─────────── IDE / OS ───────────
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─────────── Generated PDFs (test fills, candidate output) ───────────
+_test_*.pdf
+*_HUI_KONG_MING*.pdf
+TD63A_*.pdf
+IR56B_*.pdf
+*_filled.pdf
+
+# ─────────── Form mapping intermediate artifacts ───────────
+# LLM drafts + review HTMLs are regenerable — only field_map.json (frozen) is checked in.
+forms/*/field_map.draft.json
+forms/*/field_map.review.html
+forms/*/field_map.json.bak
+forms/*/*.tmp
+
+# ─────────── Logs ───────────
+*.log
+logs/

@@ -1,6 +1,152 @@
 {
   "form_id": "td63a",
-  "note": "Edit candidate_mapping: map each candidate key to the PDF field name shown in 'fields' above",
+  "candidate_mapping": {
+    "name_en": "英文姓名 Name In English",
+    "name_zh": "中文姓名 Name in Chinese",
+    "hkid": "身分證明文件號碼 Identity Document No",
+    "date_of_birth": {
+      "formatter": "split_date_to_3",
+      "targets": {
+        "dd": "99",
+        "mm": "日 M",
+        "yyyy": "年 Y"
+      }
+    },
+    "phone": "日間聯絡電話 Day Time Contact Tel. No",
+    "email": "NOT_IN_FORM",
+    "address": {
+      "formatter": "hk_address_ra",
+      "targets": {
+        "flat": "室 Flat/Room_RA",
+        "floor": "樓 Floor_RA",
+        "block": "座 Block/ Tower_RA",
+        "building": "大廈╱屋苑名稱 Name of Building / Estate_RA",
+        "street": "門牌號數及街道( 或鄉村) 名稱 Number and Name of Street (or Village)_RA",
+        "district": "地區 District_RA"
+      }
+    },
+    "ccc_code": {
+      "formatter": "split_by_space",
+      "targets": [
+        "中文商用號碼 Chinese Commercial Code_1",
+        "中文商用號碼 Chinese Commercial Code_2",
+        "中文商用號碼 Chinese Commercial Code_3",
+        "中文商用號碼 Chinese Commercial Code_4",
+        "中文商用號碼 Chinese Commercial Code_5",
+        "中文商用號碼 Chinese Commercial Code_6"
+      ]
+    },
+    "gender": "FILL_AFTER_SCAN",
+    "title": {
+      "formatter": "tickbox_group",
+      "targets": {
+        "Mr": "1",
+        "Mrs": "2",
+        "Miss": "3",
+        "Ms": "4"
+      },
+      "default_others_false": true
+    },
+    "driving_licence": "NOT_IN_FORM",
+    "licence_classes": "NOT_IN_FORM",
+    "licence_expiry": "NOT_IN_FORM"
+  },
+  "_llm_metadata": {
+    "model": "anthropic/claude-haiku-4.5",
+    "confidence": {
+      "name_en": 0.95,
+      "name_zh": 0.95,
+      "hkid": 0.95,
+      "date_of_birth": 0.85,
+      "phone": 0.95,
+      "email": 0.0,
+      "address": 0.9,
+      "ccc_code": 0.88,
+      "gender": 0.5,
+      "title": 0.92,
+      "driving_licence": 0.0,
+      "licence_classes": 0.0,
+      "licence_expiry": 0.0
+    },
+    "reasoning": {
+      "name_en": "直接中英對照欄位名，1:1 對應",
+      "name_zh": "直接中英對照欄位名，1:1 對應",
+      "hkid": "直接中英對照欄位名，1:1 對應",
+      "date_of_birth": "表格內見到獨立嘅日/月/年欄位（99 = 日期內嘅日字段），需用 split_date_to_3 拆分",
+      "phone": "中英對照欄位名，日間聯絡電話對應 Day Time Contact Tel",
+      "email": "表格內冇任何電郵欄位",
+      "address": "見到 RA（residential address）後綴嘅 6 個子欄位（flat、floor、block、building、street、district），用 hk_address_ra parser",
+      "ccc_code": "見到 Chinese Commercial Code 分為 _1 到 _6，共 6 個欄位，空格分隔 4 位一組，用 split_by_space",
+      "gender": "冇見到明確嘅男/女 tickbox，唔肯定係邊個 toggle button",
+      "title": "見到 Mr 1. / Mrs 2. / Miss 3. / Ms 4. 嘅 tickbox group，互斥，用 tickbox_group",
+      "driving_licence": "表格係駕駛執照申請表，但冇駕駛執照號碼欄位（只係申請中）",
+      "licence_classes": "表格內冇具體嘅駕駛執照級別欄位（只提及車輛類別）",
+      "licence_expiry": "表格冇駕駛執照有效期欄位"
+    },
+    "tier": {
+      "name_en": "auto_confirm",
+      "name_zh": "auto_confirm",
+      "hkid": "auto_confirm",
+      "date_of_birth": "auto_validate",
+      "phone": "auto_confirm",
+      "email": "needs_review",
+      "address": "auto_validate",
+      "ccc_code": "auto_validate",
+      "gender": "needs_review",
+      "title": "needs_review",
+      "driving_licence": "needs_review",
+      "licence_classes": "needs_review",
+      "licence_expiry": "needs_review"
+    },
+    "uncertain_fields": [
+      "toggle_1",
+      "toggle_2",
+      "toggle_4",
+      "toggle_5",
+      "toggle_6",
+      "toggle_7",
+      "toggle_8",
+      "toggle_9",
+      "Check Box0",
+      "Check Box1",
+      "Check Box2",
+      "Check Box3",
+      "Check Box4",
+      "Check Box5",
+      "Check Box6",
+      "Check Box7",
+      "Check Box9",
+      "Check Box10",
+      "Check Box11",
+      "Check Box12",
+      "Check Box13",
+      "Check Box14",
+      "Check Box15",
+      "Check Box16",
+      "Check Box17",
+      "Check Box18",
+      "Check Box19",
+      "Check Box20",
+      "Check Box21",
+      "1 私家車 Private Car",
+      "A",
+      "A_2",
+      "A_3",
+      "A_4",
+      "3",
+      "Yes I have an approval letter issued by the Commissioner for Transport upon passing the driving ability assessment",
+      "No",
+      "Yes I am suffering from",
+      "No_2",
+      "No_5",
+      "Yes please specify the disease or physical disability"
+    ],
+    "validation": {
+      "date_of_birth": "uncertain",
+      "address": "uncertain",
+      "ccc_code": "uncertain"
+    }
+  },
   "fields": {
     "日間聯絡電話 Day Time Contact Tel": {
       "type": "Unknown",
@@ -382,26 +528,5 @@
       "type": "button",
       "current_value": "/Off"
     }
-  },
-  "candidate_mapping": {
-    "name_en": "英文姓名 Name In English",
-    "name_zh": "中文姓名 Name in Chinese",
-    "hkid": "身分證明文件號碼 Identity Document No",
-    "date_of_birth": "出生日期 DATE OF BIRTH",
-    "phone": "日間聯絡電話 Day Time Contact Tel. No",
-    "email": "NOT_IN_FORM",
-    "address": "FILL_AFTER_SCAN",
-    "driving_licence": "FILL_AFTER_SCAN",
-    "licence_classes": "FILL_AFTER_SCAN",
-    "licence_expiry": "FILL_AFTER_SCAN"
-  },
-  "mapping_notes": {
-    "email": "TD63A 政府表格冇 email 欄，標 NOT_IN_FORM 跳過。",
-    "address": "地址分 RA（住址）同 CA（通訊地址），每個再拆 5 格：室 Flat/Room、樓 Floor、座 Block、大廈 Building、街道 Street、地區 District。Supabase candidates.address 係單一 text 字串，要另外寫 parser 拆開，或者分開存 address_flat / address_floor / address_block / address_building / address_street / address_district。",
-    "driving_licence": "TD63A 係申請新牌表格，可能冇現有牌號欄。候選 field：fill_12（text，位置喺 '簽發國家或地方代號' 前）。如果係 Priscilla 用嚟填申請新牌就唔使 map。",
-    "licence_classes": "牌照類別係多個 checkbox（例 '1 私家車 Private Car'、'A'、'Check Box1-20'、'toggle_*'）。要由 array → 多個 button 勾選，form_agent.py 要加 multi-button handling 邏輯，唔係單一 field name map 得掂。",
-    "licence_expiry": "TD63A 冇現有牌到期日欄（DOI_dd/mm/yyyy 係 Date of Issue，申請簽發日）。",
-    "address_fields_ra": ["大廈╱屋苑名稱 Name of Building / Estate_RA", "門牌號數及街道( 或鄉村) 名稱 Number and Name of Street (or Village)_RA", "室 Flat/Room_RA", "樓 Floor_RA", "座 Block/ Tower_RA", "地區 District_RA"],
-    "address_fields_ca": ["大廈╱屋苑名稱 Name of Building / Estate_CA", "門牌號數及街道( 或鄉村) 名稱 Number and Name of Street (or Village)_CA", "室 Flat/Room_CA", "樓 Floor_CA", "座 Block_CA", "地區 District_CA"]
   }
 }
