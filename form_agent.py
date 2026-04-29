@@ -75,18 +75,18 @@ def _fmt_strip_dashes(val, target: str) -> dict:
 
 @_formatter("split_by_space")
 def _fmt_split_by_space(val, targets: list) -> dict:
-    """Split CCC / similar grouped codes into N target fields.
+    """Split CCC / similar grouped codes into target fields (one 4-digit code per cell).
     Handles two OCR cases:
       '6079 4993 6900' (spaced)        → ['6079','4993','6900']
-      '172814986134'   (no-space blob) → ['1728','1498','6134'] when len = N*4 digits
+      '172814986134'   (no-space blob) → ['1728','1498','6134']
+    Fills first len(parts) targets; remaining targets stay empty (e.g. CCC has 6 cells
+    for up to 6-char names, 3-char name fills first 3).
     """
     s = str(val).strip()
     parts = s.split()
-    if len(parts) == 1 and parts[0].isdigit():
+    if len(parts) == 1 and parts[0].isdigit() and len(parts[0]) % 4 == 0:
         digits = parts[0]
-        n = len(targets)
-        if n > 0 and len(digits) == n * 4:
-            parts = [digits[i * 4:(i + 1) * 4] for i in range(n)]
+        parts = [digits[i:i + 4] for i in range(0, len(digits), 4)]
     return {t: p for t, p in zip(targets, parts) if p}
 
 
