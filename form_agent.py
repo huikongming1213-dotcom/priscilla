@@ -55,8 +55,10 @@ _CANDIDATE_FIELD_LABELS = {
 }
 
 # ─────────────────────────── Formatter Registry ───────────────────────────
-# Each formatter: (value, target_descriptor) → {pdf_field_name: str_value, ...}
+# Each formatter: (value, target_descriptor, candidate=None) → {pdf_field_name: str_value, ...}
 # target_descriptor shape depends on formatter (str / list / dict).
+# `candidate` is the full candidate dict — useful for multi-source formatters
+# (e.g. e-contact field that prefers phone but falls back to email).
 _FORMATTERS: dict[str, Callable] = {}
 
 
@@ -68,13 +70,13 @@ def _formatter(name: str):
 
 
 @_formatter("strip_dashes")
-def _fmt_strip_dashes(val, target: str) -> dict:
+def _fmt_strip_dashes(val, target: str, candidate: dict | None = None) -> dict:
     """1999-09-10 → 19990910. For comb-style date fields (AcroForm Comb flag)."""
     return {target: str(val).replace("-", "").replace("/", "").replace(" ", "")}
 
 
 @_formatter("split_by_space")
-def _fmt_split_by_space(val, targets: list) -> dict:
+def _fmt_split_by_space(val, targets: list, candidate: dict | None = None) -> dict:
     """Split CCC / similar grouped codes into target fields (one 4-digit code per cell).
     Handles two OCR cases:
       '6079 4993 6900' (spaced)        → ['6079','4993','6900']
@@ -91,7 +93,7 @@ def _fmt_split_by_space(val, targets: list) -> dict:
 
 
 @_formatter("date_to_comb")
-def _fmt_date_to_comb(val, target: str) -> dict:
+def _fmt_date_to_comb(val, target: str, candidate: dict | None = None) -> dict:
     """ISO '1999-09-10' → '10091999' for DDMMYYYY 8-cell comb (default HK gov layout).
     Accepts ISO (yyyy-mm-dd), DMY (dd-mm-yyyy), or any '-' / '/' / '.' / space separator.
     Day & month zero-padded; year kept as-is (typically 4-digit).
@@ -107,7 +109,7 @@ def _fmt_date_to_comb(val, target: str) -> dict:
 
 
 @_formatter("split_date_to_3")
-def _fmt_split_date_to_3(val, targets: dict) -> dict:
+def _fmt_split_date_to_3(val, targets: dict, candidate: dict | None = None) -> dict:
     """ISO '1999-09-10' or DMY '10/09/1999' → 3 separate PDF fields.
     targets shape: {"dd": pdf_field, "mm": pdf_field, "yyyy": pdf_field}.
     Order auto-detected: 4-digit prefix → ISO; else DMY.
@@ -125,7 +127,7 @@ def _fmt_split_date_to_3(val, targets: dict) -> dict:
 
 
 @_formatter("tickbox_group")
-def _fmt_tickbox_group(val, targets: dict) -> dict:
+def _fmt_tickbox_group(val, targets: dict, candidate: dict | None = None) -> dict:
     """Mutually-exclusive checkbox group (e.g. Mr/Mrs/Miss/Ms).
     targets shape: {value_a: pdf_field_a, value_b: pdf_field_b, ...}.
     Returns {pdf_field: '/Yes' for matching value, '/Off' for all OTHERS}.
@@ -141,7 +143,7 @@ def _fmt_tickbox_group(val, targets: dict) -> dict:
 
 
 @_formatter("tickbox_single")
-def _fmt_tickbox_single(val, target: str) -> dict:
+def _fmt_tickbox_single(val, target: str, candidate: dict | None = None) -> dict:
     """Single boolean checkbox. target = single PDF field name (string).
     Truthy → '/Yes', falsy / 'false' / 'no' / '0' → '/Off'.
     """
@@ -153,7 +155,7 @@ def _fmt_tickbox_single(val, target: str) -> dict:
 
 
 @_formatter("hk_address_ra")
-def _fmt_hk_address_ra(val, targets: dict) -> dict:
+def _fmt_hk_address_ra(val, targets: dict, candidate: dict | None = None) -> dict:
     """HK address string → 6 RA sub-fields via LLM parser.
     targets shape: {"building": "pdf_field_name", "street": "...", ...}
     Fallback on parser failure: dump whole address into building target.
@@ -167,6 +169,28 @@ def _fmt_hk_address_ra(val, targets: dict) -> dict:
             return out
     first_target = targets.get("building") or next(iter(targets.values()), None)
     return {first_target: str(val)} if first_target else {}
+
+
+@_formatter("e_contact_priority")
+def _fmt_e_contact_priority(val, target: str, candidate: dict | None = None) -> dict:
+    """E-Contact field — accepts phone OR email, phone preferred (HK gov spec).
+    Used by TD63A's '日間聯絡電話 Day Time Contact Tel. No' which the form
+    explicitly defines as 'E-CONTACT MEANS = phone or email (phone first)'.
+
+    Reads BOTH candidate['phone'] and candidate['email'] from the candidate dict
+    rather than the single `val` — that is why this formatter requires
+    `multi_source: true` in field_map (so the core empty-check doesn't skip it
+    when only email is present and phone is empty).
+    """
+    if not target or candidate is None:
+        return {}
+    phone = str(candidate.get("phone") or "").strip()
+    if phone:
+        return {target: phone}
+    email = str(candidate.get("email") or "").strip()
+    if email:
+        return {target: email}
+    return {}
 
 
 # ───────────────────────────────── Core ──────────────────────────────────
@@ -191,6 +215,7 @@ def _build_field_values(candidate: dict, field_map: dict) -> tuple[dict, int, in
 
     for cand_key, spec in mapping.items():
         # ─ 1. Parse mapping spec ─
+        multi_source = False
         if isinstance(spec, str):
             if spec in (_SKIP_IN_FORM, _FILL_AFTER_SCAN):
                 continue
@@ -206,6 +231,7 @@ def _build_field_values(candidate: dict, field_map: dict) -> tuple[dict, int, in
             if target is None:
                 log.warning("Formatter %s missing target/targets for %s", fmt_name, cand_key)
                 continue
+            multi_source = bool(spec.get("multi_source", False))
         else:
             continue
 
@@ -215,14 +241,15 @@ def _build_field_values(candidate: dict, field_map: dict) -> tuple[dict, int, in
 
         total_count += 1
         val = candidate.get(cand_key)
-        if val is None or str(val).strip() == "":
+        # multi_source formatters read other candidate keys too — don't skip on empty val.
+        if not multi_source and (val is None or str(val).strip() == ""):
             missing.append(_CANDIDATE_FIELD_LABELS.get(cand_key, cand_key))
             continue
 
         # ─ 3. Apply formatter or plain 1:1 fill ─
         if formatter_fn:
             try:
-                new_values = formatter_fn(val, target)
+                new_values = formatter_fn(val, target, candidate)
             except Exception as e:
                 log.warning("Formatter failed for %s: %s", cand_key, e)
                 missing.append(_CANDIDATE_FIELD_LABELS.get(cand_key, cand_key))
@@ -245,6 +272,33 @@ def _set_need_appearances(writer: PdfWriter) -> None:
     catalog = writer._root_object
     if NameObject("/AcroForm") in catalog:
         catalog[NameObject("/AcroForm")][NameObject("/NeedAppearances")] = BooleanObject(True)
+
+
+def _bake_appearances(pdf_bytes: bytes) -> bytes:
+    """Bake AcroForm /V values into /AP appearance streams via PyMuPDF.
+    Required for Google Drive preview / Chrome PDF / mobile viewers that don't honour
+    /NeedAppearances. Adobe Reader works without this, but most casual viewers don't.
+    """
+    try:
+        import fitz  # PyMuPDF
+    except ImportError:
+        log.warning("PyMuPDF not installed — skipping appearance bake")
+        return pdf_bytes
+
+    doc = fitz.open(stream=pdf_bytes, filetype="pdf")
+    try:
+        for page in doc:
+            widgets = page.widgets()
+            if not widgets:
+                continue
+            for w in widgets:
+                try:
+                    w.update()  # generates /AP from current /V
+                except Exception as e:
+                    log.warning("Widget bake failed (%s): %s", w.field_name, e)
+        return doc.tobytes(garbage=4, deflate=True)
+    finally:
+        doc.close()
 
 
 def fill_form(form_id: str, candidate: dict) -> tuple[bytes, int, int, list[str]]:
@@ -276,4 +330,5 @@ def fill_form(form_id: str, candidate: dict) -> tuple[bytes, int, int, list[str]
 
     buf = BytesIO()
     writer.write(buf)
-    return buf.getvalue(), filled, total, missing
+    pdf_bytes = _bake_appearances(buf.getvalue())
+    return pdf_bytes, filled, total, missing

@@ -8,7 +8,12 @@
       "formatter": "date_to_comb",
       "target": "出生日期 DATE OF BIRTH"
     },
-    "phone": "日間聯絡電話 Day Time Contact Tel. No",
+    "phone": {
+      "formatter": "e_contact_priority",
+      "target": "日間聯絡電話 Day Time Contact Tel. No",
+      "multi_source": true,
+      "_note": "TD63A field is 'E-CONTACT MEANS' (phone or email, phone preferred). Formatter reads candidate.phone first, falls back to candidate.email."
+    },
     "email": "NOT_IN_FORM",
     "address": {
       "formatter": "hk_address_ra",
