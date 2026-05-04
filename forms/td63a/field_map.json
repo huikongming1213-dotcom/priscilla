@@ -8,13 +8,13 @@
       "formatter": "date_to_comb",
       "target": "出生日期 DATE OF BIRTH"
     },
-    "phone": {
+    "phone": "日間聯絡電話 Day Time Contact Tel. No",
+    "email": {
       "formatter": "e_contact_priority",
-      "target": "日間聯絡電話 Day Time Contact Tel. No",
+      "target": "comb_0",
       "multi_source": true,
-      "_note": "TD63A field is 'E-CONTACT MEANS' (phone or email, phone preferred). Formatter reads candidate.phone first, falls back to candidate.email."
+      "_note": "TD63A P2 has TWO contact widgets: (1) '日間聯絡電話 Day Time Contact Tel. No' at y=564 — pure phone field (always filled with phone). (2) 'comb_0' at y=280, sitting directly below the '電子聯絡 E-CONTACT / 電郵 EMAIL' labels — this is the e-contact row. Operator preference: email-first, phone fallback. Tooltip /TU='室 Flat/Room' is a leftover (Flat/Room already has dedicated _RA/_CA fields)."
     },
-    "email": "NOT_IN_FORM",
     "address": {
       "formatter": "hk_address_ra",
       "targets": {

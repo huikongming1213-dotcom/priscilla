@@ -173,23 +173,25 @@ def _fmt_hk_address_ra(val, targets: dict, candidate: dict | None = None) -> dic
 
 @_formatter("e_contact_priority")
 def _fmt_e_contact_priority(val, target: str, candidate: dict | None = None) -> dict:
-    """E-Contact field — accepts phone OR email, phone preferred (HK gov spec).
-    Used by TD63A's '日間聯絡電話 Day Time Contact Tel. No' which the form
-    explicitly defines as 'E-CONTACT MEANS = phone or email (phone first)'.
+    """E-Contact field — accepts email OR phone, EMAIL preferred (real-world usage).
+    Used by TD63A's `comb_0` field (P2, just below '電子聯絡 E-CONTACT MEANS' label).
 
-    Reads BOTH candidate['phone'] and candidate['email'] from the candidate dict
+    Operator preference: when both phone & email exist, email is more useful for
+    follow-up correspondence; only fall back to phone when no email available.
+
+    Reads BOTH candidate['email'] and candidate['phone'] from the candidate dict
     rather than the single `val` — that is why this formatter requires
     `multi_source: true` in field_map (so the core empty-check doesn't skip it
-    when only email is present and phone is empty).
+    when only one of email/phone is present).
     """
     if not target or candidate is None:
         return {}
-    phone = str(candidate.get("phone") or "").strip()
-    if phone:
-        return {target: phone}
     email = str(candidate.get("email") or "").strip()
     if email:
         return {target: email}
+    phone = str(candidate.get("phone") or "").strip()
+    if phone:
+        return {target: phone}
     return {}
 
 
